@@ -9,14 +9,15 @@ import CartDrawer from './components/CartDrawer';
 import ProductModal from './components/ProductModal';
 import AuthModal from './components/AuthModal';
 
+// Lazy loaded pages
 const Success = lazy(() => import('./pages/Success'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 
 function App() {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Cart
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem('fitthread-cart');
     if (savedCart) {
@@ -32,7 +33,6 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
-  // Filters & Modals
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -137,11 +137,11 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <div className="max-w-7xl mx-auto px-6 py-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter mb-4">
+            <div className="max-w-7xl mx-auto px-6 py-16 text-center">
+              <h2 className="text-6xl font-bold tracking-tighter mb-4">
                 Premium Activewear
               </h2>
-              <p className="text-lg text-zinc-400 mb-8 max-w-md mx-auto">
+              <p className="text-xl text-zinc-400 mb-8 max-w-md mx-auto">
                 Move better. Look better. Built for the grind.
               </p>
             </div>
@@ -188,6 +188,12 @@ function App() {
             <Success />
           </Suspense>
         } />
+
+        <Route path="/auth/callback" element={
+          <Suspense fallback={<div className="min-h-screen bg-zinc-950 flex items-center justify-center text-white">Completing login...</div>}>
+            <AuthCallback />
+          </Suspense>
+        } />
       </Routes>
 
       <CartDrawer 
@@ -214,5 +220,3 @@ function App() {
 }
 
 export default App;
-
-
