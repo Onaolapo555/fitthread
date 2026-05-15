@@ -137,8 +137,8 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <div className="max-w-7xl mx-auto px-6 py-16 text-center">
-              <h2 className="text-6xl font-bold tracking-tighter mb-4">
+            <div className="max-w-7xl mx-auto px-10 py-5 text-center">
+              <h2 className="text-3xl font-bold tracking-tighter mb-4">
                 Premium Activewear
               </h2>
               <p className="text-xl text-zinc-400 mb-8 max-w-md mx-auto">
