@@ -8,6 +8,7 @@ import ProductCard from './components/ProductCard';
 import CartDrawer from './components/CartDrawer';
 import ProductModal from './components/ProductModal';
 import AuthModal from './components/AuthModal';
+import Footer from './components/Footer';
 
 // Lazy loaded pages
 const Success = lazy(() => import('./pages/Success'));
@@ -215,6 +216,7 @@ function App() {
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
       />
+      <Footer />
     </div>
   );
 }
