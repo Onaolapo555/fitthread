@@ -3,7 +3,7 @@ import type { Product } from "./types";
 const img = (id: string, w = 800) =>
   `https://images.unsplash.com/${id}?q=80&w=${w}&auto=format&fit=crop`;
 
-export const HERO_IMAGE = img("photo-1591047139829-d91aecb6caea", 1000);
+export const HERO_IMAGE = img("photo-1521223890158-f9f7c3d5d504", 1000);
 
 export const PRODUCTS: Product[] = [
   {
