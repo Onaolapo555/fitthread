@@ -30,3 +30,6 @@ yarn-error.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# legacy scaffold (local only, do not deploy)
+nexus/
