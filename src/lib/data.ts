@@ -60,6 +60,60 @@ export const PRODUCTS: Product[] = [
     image: img("photo-1556821840-3a63f95609a7"),
     colors: ["#1a1a1a", "#b03a2e", "#edeae3"],
   },
+  {
+    id: "essential-tee-001",
+    name: "Essential Tee",
+    code: "001",
+    price: 140,
+    category: "Tops",
+    image: img("photo-1521572163474-6864f9cf17ab"),
+    colors: ["#edeae3", "#1a1a1a", "#6b6b6b"],
+  },
+  {
+    id: "boxy-tee-002",
+    name: "Boxy Tee",
+    code: "002",
+    price: 140,
+    category: "Tops",
+    image: img("photo-1576566588028-4147f3842f27"),
+    colors: ["#1a1a1a", "#edeae3"],
+  },
+  {
+    id: "stacked-tees-003",
+    name: "Stacked Tees",
+    code: "003",
+    price: 140,
+    category: "Tops",
+    image: img("photo-1523381210434-271e8be1f52b"),
+    colors: ["#6b6b6b", "#1a1a1a", "#b03a2e"],
+  },
+  {
+    id: "raw-denim-004",
+    name: "Raw Denim",
+    code: "004",
+    price: 140,
+    category: "Trousers",
+    image: img("photo-1542272604-787c3835535d"),
+    colors: ["#2b3a55", "#1a1a1a"],
+  },
+  {
+    id: "washed-denim-005",
+    name: "Washed Denim",
+    code: "005",
+    price: 140,
+    category: "Trousers",
+    image: img("photo-1541099649105-f69ad21f3246"),
+    colors: ["#6b7f99", "#1a1a1a"],
+  },
+  {
+    id: "cloud-hoodie-003",
+    name: "Cloud Hoodie",
+    code: "003",
+    price: 140,
+    category: "Hoodies",
+    image: img("photo-1571945153237-4929e783af4a"),
+    colors: ["#6b6b6b", "#edeae3", "#1a1a1a"],
+  },
 ];
 
 export const MANIFESTO_IMAGES = [
@@ -76,4 +130,4 @@ export const WORKSHOP_IMAGES = [
   img("photo-1556905055-8f358a7a47b2", 700),
 ];
 
-export const CATEGORIES = ["New Drop", "Hoodies", "Trousers", "Outerwear"] as const;
+export const CATEGORIES = ["New Drop", "Hoodies", "Trousers", "Outerwear", "Tops"] as const;

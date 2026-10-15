@@ -1,13 +1,16 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { CartItem, Product } from "@/lib/types";
+
+export type Toast = { id: number; message: string };
 
 type CartContextValue = {
   cart: CartItem[];
   count: number;
   total: number;
   isOpen: boolean;
+  toast: Toast | null;
   setOpen: (open: boolean) => void;
   add: (product: Product) => void;
   updateQty: (id: string, qty: number) => void;
@@ -21,6 +24,8 @@ const STORAGE_KEY = "fitthread-cart";
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isOpen, setOpen] = useState(false);
+  const [toast, setToast] = useState<Toast | null>(null);
+  const toastTimer = useRef<number | null>(null);
 
   useEffect(() => {
     try {
@@ -47,7 +52,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
-    setOpen(true);
+    // Toast notification instead of yanking the drawer open
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    setToast({ id: Date.now(), message: product.name });
+    toastTimer.current = window.setTimeout(() => setToast(null), 2200);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    };
   }, []);
 
   const updateQty = useCallback((id: string, qty: number) => {
@@ -69,8 +83,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [cart]);
 
   const value = useMemo(
-    () => ({ cart, count, total, isOpen, setOpen, add, updateQty, remove, clear }),
-    [cart, count, total, isOpen, add, updateQty, remove, clear]
+    () => ({ cart, count, total, isOpen, toast, setOpen, add, updateQty, remove, clear }),
+    [cart, count, total, isOpen, toast, add, updateQty, remove, clear]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

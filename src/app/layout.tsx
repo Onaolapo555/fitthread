@@ -3,6 +3,7 @@ import { Anton, Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import CartDrawer from "@/components/CartDrawer";
+import AddedToast from "@/components/AddedToast";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CartProvider>
           {children}
           <CartDrawer />
+          <AddedToast />
         </CartProvider>
       </body>
     </html>

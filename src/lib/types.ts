@@ -3,7 +3,7 @@ export type Product = {
   name: string;
   code: string;
   price: number;
-  category: "Hoodies" | "Trousers" | "Outerwear" | "New Drop";
+  category: "Hoodies" | "Trousers" | "Outerwear" | "Tops" | "New Drop";
   image: string;
   colors: string[];
 };
