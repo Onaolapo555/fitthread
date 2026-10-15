@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import { useCart } from "@/lib/cart";
@@ -19,6 +20,13 @@ type Props = {
  */
 export default function ProductTile({ product, onSelect, priority, sizes, className = "" }: Props) {
   const { add } = useCart();
+  const [grey, setGrey] = useState(true);
+  const accent = product.colors[0] ?? "#b03a2e";
+
+  const dot = (active: boolean) =>
+    `w-4 h-4 rounded-full transition ${
+      active ? "ring-2 ring-bone ring-offset-2 ring-offset-black" : "border border-white/50 hover:border-bone"
+    }`;
 
   return (
     <article
@@ -31,7 +39,9 @@ export default function ProductTile({ product, onSelect, priority, sizes, classN
           alt={product.name}
           fill
           priority={priority}
-          className="object-cover img-duotone group-hover:scale-105 transition duration-500"
+          className={`object-cover transition duration-500 group-hover:scale-105 ${
+            grey ? "img-duotone" : ""
+          }`}
           sizes={sizes}
         />
         {/* Glass info bar */}
@@ -41,14 +51,31 @@ export default function ProductTile({ product, onSelect, priority, sizes, classN
               {product.name} / {product.code}
             </p>
             <p className="text-bone font-bold text-lg mt-0.5">${product.price}</p>
-            <div className="flex gap-1.5 mt-2">
-              {product.colors.map((c) => (
-                <span
-                  key={c}
-                  className="w-3.5 h-3.5 rounded-full border border-white/70"
-                  style={{ background: c }}
-                />
-              ))}
+            <div className="flex gap-2 mt-2">
+              <button
+                type="button"
+                title="Grey version"
+                aria-label={`${product.name} in grey`}
+                aria-pressed={grey}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGrey(true);
+                }}
+                className={dot(grey)}
+                style={{ background: "#808080" }}
+              />
+              <button
+                type="button"
+                title="Original color"
+                aria-label={`${product.name} in original color`}
+                aria-pressed={!grey}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setGrey(false);
+                }}
+                className={dot(!grey)}
+                style={{ background: accent }}
+              />
             </div>
           </div>
           <button
