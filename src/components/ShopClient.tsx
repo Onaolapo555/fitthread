@@ -66,7 +66,7 @@ export default function ShopClient({ products }: { products: Product[] }) {
             No builds match your search.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[3px] mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {items.map((p, i) => (
               <ProductTile
                 key={p.id}

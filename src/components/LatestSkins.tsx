@@ -33,7 +33,7 @@ export default function LatestSkins({
 
       {/* Carousel */}
       <div className="relative mt-4">
-        <div className="flex gap-[3px] overflow-x-auto no-scrollbar snap-x snap-mandatory px-0">
+        <div className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-5 md:px-8">
           {items.length === 0 && (
             <p className="w-full text-center text-smoke font-signal text-sm py-20">
               No builds match your search.

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton, Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
+import { AuthProvider } from "@/lib/auth";
 import CartDrawer from "@/components/CartDrawer";
 import AddedToast from "@/components/AddedToast";
 
@@ -19,9 +20,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${grotesk.variable} ${signal.variable}`}>
       <body className="min-h-screen bg-ink text-bone antialiased">
         <CartProvider>
-          {children}
-          <CartDrawer />
-          <AddedToast />
+          <AuthProvider>
+            {children}
+            <CartDrawer />
+            <AddedToast />
+          </AuthProvider>
         </CartProvider>
       </body>
     </html>

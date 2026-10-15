@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, Search, User, X } from "lucide-react";
+import { Menu, Search, User, X, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useAuth } from "@/lib/auth";
+import AuthModal from "@/components/AuthModal";
 
 const NAV = [
   { label: "SHOP", href: "/shop" },
@@ -22,7 +24,10 @@ function Wordmark() {
 
 export default function Header({ onSearch }: { onSearch: (v: string) => void }) {
   const { count, setOpen } = useCart();
+  const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -72,12 +77,43 @@ export default function Header({ onSearch }: { onSearch: (v: string) => void }) 
                 className="bg-transparent outline-none text-[13px] w-full placeholder:text-black/60 font-signal"
               />
             </label>
-            <button
-              aria-label="Account"
-              className="w-9 h-9 bg-bone text-black flex items-center justify-center hover:bg-lime transition"
-            >
-              <User className="w-4 h-4" strokeWidth={2.5} />
-            </button>
+            {user ? (
+              <div className="relative">
+                <button
+                  aria-label="Account menu"
+                  onClick={() => setUserMenu((o) => !o)}
+                  className="w-9 h-9 bg-lime text-black flex items-center justify-center font-signal font-bold text-sm hover:bg-bone transition"
+                >
+                  {user.name[0]?.toUpperCase()}
+                </button>
+                {userMenu && (
+                  <>
+                    <div className="fixed inset-0 z-10" onClick={() => setUserMenu(false)} />
+                    <div className="absolute right-0 top-11 z-20 w-56 bg-coal border border-white/15 p-4">
+                      <p className="text-bone text-sm font-medium truncate">{user.name}</p>
+                      <p className="text-smoke text-xs font-signal truncate mt-0.5">{user.email}</p>
+                      <button
+                        onClick={() => {
+                          signOut();
+                          setUserMenu(false);
+                        }}
+                        className="mt-4 w-full flex items-center justify-center gap-2 border border-white/15 text-ember font-signal text-[12px] py-2.5 hover:border-ember transition"
+                      >
+                        <LogOut className="w-3.5 h-3.5" /> LOGOUT
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <button
+                aria-label="Sign in"
+                onClick={() => setAuthOpen(true)}
+                className="w-9 h-9 bg-bone text-black flex items-center justify-center hover:bg-lime transition"
+              >
+                <User className="w-4 h-4" strokeWidth={2.5} />
+              </button>
+            )}
             <button
               onClick={() => setOpen(true)}
               className="font-signal text-[12px] tracking-[0.14em] text-bone/90 hover:text-lime transition px-1"
@@ -153,6 +189,8 @@ export default function Header({ onSearch }: { onSearch: (v: string) => void }) 
           </p>
         </div>
       </aside>
+
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   );
 }
