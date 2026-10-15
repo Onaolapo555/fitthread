@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Menu, Search, User, X, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { useAuth } from "@/lib/auth";
-import AuthModal from "@/components/AuthModal";
 
 const NAV = [
   { label: "SHOP", href: "/shop" },
@@ -24,9 +23,8 @@ function Wordmark() {
 
 export default function Header({ onSearch }: { onSearch: (v: string) => void }) {
   const { count, setOpen } = useCart();
-  const { user, signOut } = useAuth();
+  const { user, signOut, openAuth } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
 
   useEffect(() => {
@@ -108,7 +106,7 @@ export default function Header({ onSearch }: { onSearch: (v: string) => void }) 
             ) : (
               <button
                 aria-label="Sign in"
-                onClick={() => setAuthOpen(true)}
+                onClick={openAuth}
                 className="w-9 h-9 bg-bone text-black flex items-center justify-center hover:bg-lime transition"
               >
                 <User className="w-4 h-4" strokeWidth={2.5} />
@@ -189,8 +187,6 @@ export default function Header({ onSearch }: { onSearch: (v: string) => void }) 
           </p>
         </div>
       </aside>
-
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
   );
 }

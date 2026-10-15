@@ -24,7 +24,7 @@ export default function Hero() {
             <div className="relative aspect-[4/5] overflow-hidden">
               <Image
                 src={HERO_IMAGE}
-                alt="FitThread Alt Shell Jacket"
+                alt="FitThread black leather biker jacket"
                 fill
                 priority
                 className="object-cover img-duotone"

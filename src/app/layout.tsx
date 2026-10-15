@@ -5,6 +5,7 @@ import { CartProvider } from "@/lib/cart";
 import { AuthProvider } from "@/lib/auth";
 import CartDrawer from "@/components/CartDrawer";
 import AddedToast from "@/components/AddedToast";
+import AuthModal from "@/components/AuthModal";
 
 const display = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk" });
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
             <CartDrawer />
             <AddedToast />
+            <AuthModal />
           </AuthProvider>
         </CartProvider>
       </body>

@@ -5,15 +5,15 @@ import { useAuth } from "@/lib/auth";
 
 type Tab = "signin" | "register";
 
-export default function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { signIn } = useAuth();
+export default function AuthModal() {
+  const { signIn, authOpen, closeAuth } = useAuth();
   const [tab, setTab] = useState<Tab>("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  if (!open) return null;
+  if (!authOpen) return null;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
     setName("");
     setEmail("");
     setPassword("");
-    onClose();
+    closeAuth();
   }
 
   const input =
@@ -42,11 +42,11 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/80" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/80" onClick={closeAuth} />
       <div className="relative bg-coal border border-white/10 w-full max-w-md p-8">
         <div className="flex justify-between items-center mb-2">
           <h2 className="font-display text-3xl text-bone">WEAR YOUR VERSION</h2>
-          <button onClick={onClose} className="text-2xl text-smoke hover:text-bone" aria-label="Close">
+          <button onClick={closeAuth} className="text-2xl text-smoke hover:text-bone" aria-label="Close">
             ✕
           </button>
         </div>

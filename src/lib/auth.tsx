@@ -6,8 +6,11 @@ export type MockUser = { name: string; email: string };
 
 type AuthContextValue = {
   user: MockUser | null;
+  authOpen: boolean;
   signIn: (name: string, email: string) => void;
   signOut: () => void;
+  openAuth: () => void;
+  closeAuth: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -16,6 +19,7 @@ const STORAGE_KEY = "fitthread-user";
 /** Demo auth for the portfolio build — any credentials work, persisted locally. */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<MockUser | null>(null);
+  const [authOpen, setAuthOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -45,7 +49,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const value = useMemo(() => ({ user, signIn, signOut }), [user, signIn, signOut]);
+  const value = useMemo(
+    () => ({
+      user,
+      authOpen,
+      signIn,
+      signOut,
+      openAuth: () => setAuthOpen(true),
+      closeAuth: () => setAuthOpen(false),
+    }),
+    [user, authOpen, signIn, signOut]
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

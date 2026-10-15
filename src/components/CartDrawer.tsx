@@ -3,13 +3,22 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCart } from "@/lib/cart";
+import { useAuth } from "@/lib/auth";
 
 export default function CartDrawer() {
   const { cart, total, count, isOpen, setOpen, updateQty, remove } = useCart();
+  const { user, openAuth } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [notice, setNotice] = useState("");
 
   async function checkout() {
     if (cart.length === 0) return;
+    if (!user) {
+      setNotice("Sign in or create an account to check out.");
+      openAuth();
+      return;
+    }
+    setNotice("");
     setLoading(true);
     try {
       const res = await fetch("/api/checkout", {
@@ -94,8 +103,11 @@ export default function CartDrawer() {
               disabled={loading}
               className="w-full bg-lime text-black font-signal font-bold text-sm py-4 hover:bg-bone transition disabled:opacity-60"
             >
-              {loading ? "PROCESSING..." : "PROCEED TO CHECKOUT"}
+              {loading ? "PROCESSING..." : user ? "PROCEED TO CHECKOUT" : "SIGN IN TO CHECKOUT"}
             </button>
+            {notice && !user && (
+              <p className="text-center font-signal text-[11px] text-ember mt-3">{notice}</p>
+            )}
             <p className="text-center font-signal text-[11px] text-smoke mt-3">
               Secure payment powered by Stripe
             </p>
